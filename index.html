@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <title>MiiCanvas.js</title>
+    <meta charset="utf-8"/>
+
+    <script type="text/javascript" src="src/MiiCanvas.js"></script>
+    <script type="text/javascript">
+    onLoad(function() {
+        
+        let MiiCan = new MiiCanvas({canvasId:'my-canvas-0', W:500, H:500});
+
+        MiiCan.setBg( '#444' );
+
+        // MiiCan.drawRect( 30, 30, 200, 30, '#F00' );
+        // MiiCan.drawLine( 30, 100, 200, 160, '#FF0' );
+        // MiiCan.drawDot( 500, 100, 40, '#F95' );
+        // MiiCan.drawDotField( 500, 100, 60, '#F00' );
+        // MiiCan.infoText(' # MiiCanvas.js', '#00F' );
+        // MiiCan.drawText(' # MiiCanvas.js', 350, 50, '#0F0' );
+
+        let x = 0;
+        let y = 0;
+        let val = 0;
+        let radius = 100;
+
+        MiiCan.setFrameRate( 15 );
+        MiiCan.onFrame(function( frame, mSecPast, secPast ){
+
+            // console.log(' frame: ['+frame+'], mSecPast: ['+mSecPast+'], secPast: ['+secPast+']');
+
+            MiiCan.clear();
+
+            val += 0.1;
+
+            MiiCan.drawLine( 0, y, MiiCan.W, y, '#0F0', 1 );
+            MiiCan.drawLine( x, 0, x, MiiCan.H, '#0F0', 1 );
+
+            x = MiiCan.CW - ( Math.cos( val ) * radius );
+            y = MiiCan.CW - ( Math.sin( val ) * radius );
+
+            MiiCan.drawDot( x, y, 10, '#F95' );
+
+
+        });
+
+        MiiCan.startAnimation();
+
+        MiiCan.onMouseDown(function(e, x, y){});
+        MiiCan.onMouseUp(function(e, x, y){});
+
+        MiiCan.onMouseMove(function(e, x, y, isMouseDown){
+            console.log( ' #MiiCan.onMouseMove: ', {x,y, isMouseDown} );
+        });
+
+    });
+    </script>
+
+</head>
+<body>
+
+    <canvas id="my-canvas-0"></canvas>
+    <canvas id="my-canvas-1"></canvas>
+
+</body>
+</html>
